@@ -3,7 +3,7 @@ import { GoogleGenAI } from "@google/genai";
 import { SessionRecord, Language } from "../types";
 
 export const getSessionInsights = async (session: SessionRecord, lang: Language) => {
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  const ai = new GoogleGenAI({ apiKey: import.meta.env.VITE:API:KEY });
   
   const prompt = `
     Analiza esta sesión de entrenamiento de tenis/deportes desde una perspectiva pedagógica.
