@@ -33,6 +33,11 @@ export interface SessionRecord {
   createdAt: string;
 }
 
+export interface ManualDefinition {
+  label: string;
+  definition: string;
+}
+
 export interface Translations {
   title: string;
   coachSection: string;
@@ -60,12 +65,14 @@ export interface Translations {
   activityTitle: string;
   registeredActivities: string;
   actions: string;
+  helpInstructions: string[];
+  methodology: string;
   levels: Record<PlayerLevel, string>;
   certifications: string[];
   options: {
-    practice: Record<string, string>;
-    instruction: Record<string, string>;
-    feedback: Record<string, string>;
+    practice: Record<string, ManualDefinition>;
+    instruction: Record<string, ManualDefinition>;
+    feedback: Record<string, ManualDefinition>;
   };
   aiAnalysis: string;
   getInsights: string;
