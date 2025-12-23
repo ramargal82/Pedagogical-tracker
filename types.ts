@@ -74,7 +74,4 @@ export interface Translations {
     instruction: Record<string, ManualDefinition>;
     feedback: Record<string, ManualDefinition>;
   };
-  aiAnalysis: string;
-  getInsights: string;
-  loading: string;
 }

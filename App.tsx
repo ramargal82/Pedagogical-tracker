@@ -12,7 +12,6 @@ import {
 import { i18n } from './translations';
 import { LanguageSelector } from './components/LanguageSelector';
 import { OptionButton } from './components/OptionButton';
-import { getSessionInsights } from './services/geminiService';
 import { 
   User, 
   ClipboardList, 
@@ -20,8 +19,6 @@ import {
   Trash2, 
   Save, 
   History as HistoryIcon, 
-  Cpu, 
-  Award,
   Calendar,
   Download,
   Edit2,
@@ -33,7 +30,8 @@ import {
 } from 'lucide-react';
 
 const App: React.FC = () => {
-  const [lang, setLang] = useState<Language>('es');
+  // Set English as the default language as requested
+  const [lang, setLang] = useState<Language>('en');
   const t = i18n[lang];
 
   // Coach and Session State
@@ -65,8 +63,6 @@ const App: React.FC = () => {
   const [history, setHistory] = useState<SessionRecord[]>([]);
   const [showHistory, setShowHistory] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
-  const [aiInsights, setAiInsights] = useState<string | null>(null);
-  const [isAiLoading, setIsAiLoading] = useState(false);
 
   useEffect(() => {
     const saved = localStorage.getItem('pedagogical_history');
@@ -81,7 +77,7 @@ const App: React.FC = () => {
 
   const saveToHistory = () => {
     if (activities.length === 0) {
-      alert(lang === 'es' ? 'No hay actividades para guardar' : 'No activities to save');
+      alert(lang === 'es' ? 'No hay actividades para guardar' : lang === 'pt' ? 'Sem atividades para salvar' : 'No activities to save');
       return;
     }
     const record: SessionRecord = {
@@ -94,7 +90,7 @@ const App: React.FC = () => {
     const newHistory = [record, ...history];
     setHistory(newHistory);
     localStorage.setItem('pedagogical_history', JSON.stringify(newHistory));
-    alert(lang === 'es' ? 'Sesión guardada!' : 'Session saved!');
+    alert(lang === 'es' ? 'Sesión guardada!' : lang === 'pt' ? 'Sessão salva!' : 'Session saved!');
   };
 
   const loadSession = (record: SessionRecord) => {
@@ -102,12 +98,11 @@ const App: React.FC = () => {
     setSession(record.session);
     setActivities(record.activities);
     setShowHistory(false);
-    setAiInsights(null);
   };
 
   const registerActivity = () => {
     if (!currentActivity.title.trim()) {
-      alert(lang === 'es' ? 'Introduce un título' : 'Enter a title');
+      alert(lang === 'es' ? 'Introduce un título' : lang === 'pt' ? 'Insira um título' : 'Enter a title');
       return;
     }
 
@@ -158,14 +153,6 @@ const App: React.FC = () => {
     setCurrentActivity({ ...currentActivity, [category]: updated });
   };
 
-  const handleAiAnalysis = async () => {
-    if (activities.length === 0) return;
-    setIsAiLoading(true);
-    const insights = await getSessionInsights({ coach, session, activities, id: 'temp', createdAt: '' }, lang);
-    setAiInsights(insights);
-    setIsAiLoading(false);
-  };
-
   const exportToCSV = () => {
     if (activities.length === 0) return;
     
@@ -175,22 +162,20 @@ const App: React.FC = () => {
 
     let csvContent = "data:text/csv;charset=utf-8,";
     
-    // Headers: Coach Info + Session Info + Activity Title + Options
     const headers = [
-      t.name,             // Coach Name
-      t.age,              // Coach Age
-      t.certification,    // Coach Certification
-      t.date,             // Session Date
-      t.numPlayers,       // Num Players
-      t.playerLevel,      // Level Label
-      t.activityTitle,    // Activity Title
+      t.name,
+      t.age,
+      t.certification,
+      t.date,
+      t.numPlayers,
+      t.playerLevel,
+      t.activityTitle,
       ...practiceKeys.map(k => `Org: ${t.options.practice[k].label}`),
       ...instructionKeys.map(k => `Inst: ${t.options.instruction[k].label}`),
       ...feedbackKeys.map(k => `Feed: ${t.options.feedback[k].label}`)
     ];
     csvContent += headers.map(h => `"${h}"`).join(",") + "\n";
     
-    // Rows
     activities.forEach(a => {
       const row = [
         `"${coach.name}"`,
@@ -247,10 +232,15 @@ const App: React.FC = () => {
       )}
 
       <header className="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
-        <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <ClipboardList className="w-8 h-8 text-blue-600" />
-            <h1 className="text-xl font-bold text-slate-800 hidden sm:block">{t.title}</h1>
+        <div className="max-w-6xl mx-auto px-4 h-24 flex items-center justify-between">
+          <div className="flex flex-col">
+            <div className="flex items-center space-x-2">
+              <ClipboardList className="w-6 h-6 text-blue-600" />
+              <h1 className="text-xl font-bold text-slate-800 tracking-tight">KTO: Teaching and Coaching Observation Tool</h1>
+            </div>
+            <p className="text-[10px] sm:text-xs text-slate-500 mt-1 ml-8 italic leading-tight max-w-md sm:max-w-xl">
+              A practical tool by John Komar, Irfan Ismail & Jia Yi Chow, National Institute of Education, Singapore.
+            </p>
           </div>
           <div className="flex items-center space-x-3">
             <LanguageSelector current={lang} onSelect={setLang} />
@@ -276,7 +266,7 @@ const App: React.FC = () => {
                 {t.history}
               </h2>
               <button onClick={() => setShowHistory(false)} className="text-sm font-semibold text-slate-500">
-                {lang === 'es' ? 'Volver' : 'Back'}
+                {lang === 'es' ? 'Volver' : lang === 'pt' ? 'Voltar' : 'Back'}
               </button>
             </div>
             {history.length === 0 ? (
@@ -480,7 +470,9 @@ const App: React.FC = () => {
                   </thead>
                   <tbody className="divide-y divide-slate-100">
                     {activities.length === 0 ? (
-                      <tr><td colSpan={5} className="px-6 py-12 text-center text-slate-400 text-sm">Empieza registrando una actividad</td></tr>
+                      <tr><td colSpan={5} className="px-6 py-12 text-center text-slate-400 text-sm">
+                        {lang === 'es' ? 'Empieza registrando una actividad' : lang === 'pt' ? 'Comece registrando uma atividade' : 'Start by registering an activity'}
+                      </td></tr>
                     ) : (
                       activities.map(act => (
                         <tr key={act.id} className="hover:bg-slate-50 transition-colors">
@@ -513,30 +505,6 @@ const App: React.FC = () => {
                 </table>
               </div>
             </section>
-
-            {/* Insights */}
-            <div className="bg-gradient-to-br from-blue-700 to-indigo-900 rounded-[2.5rem] p-10 text-white shadow-2xl relative overflow-hidden group">
-              <div className="absolute top-0 right-0 p-10 opacity-10 group-hover:scale-110 transition-transform duration-700"><Cpu className="w-48 h-48" /></div>
-              <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-8 mb-10">
-                <div>
-                  <h2 className="text-3xl font-black mb-2">{t.aiAnalysis}</h2>
-                  <p className="text-blue-200">Consultoría pedagógica automática con Gemini</p>
-                </div>
-                <button 
-                  onClick={handleAiAnalysis} disabled={isAiLoading || activities.length === 0}
-                  className="px-8 py-4 bg-white text-blue-900 rounded-2xl font-black shadow-xl hover:-translate-y-1 transition-all disabled:opacity-50"
-                >
-                  {isAiLoading ? t.loading : t.getInsights}
-                </button>
-              </div>
-              {aiInsights && (
-                <div className="bg-white/10 backdrop-blur-xl rounded-3xl p-8 border border-white/20 animate-in zoom-in-95">
-                  <div className="prose prose-invert max-w-none text-blue-50">
-                    {aiInsights.split('\n').map((l, i) => <p key={i} className="mb-4">{l}</p>)}
-                  </div>
-                </div>
-              )}
-            </div>
           </>
         )}
       </main>

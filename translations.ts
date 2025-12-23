@@ -3,7 +3,7 @@ import { Translations } from './types';
 
 export const i18n: Record<string, Translations> = {
   es: {
-    title: "KTO Tracker Pro",
+    title: "KTO: Teaching and Coaching Observation Tool",
     coachSection: "Entrenador",
     sessionSection: "Sesión",
     activitySection: "Nueva Actividad",
@@ -38,9 +38,6 @@ export const i18n: Record<string, Translations> = {
       "Se excluyen instrucciones puras de organización (ej. 'poneos por parejas').",
       "Se excluye el feedback puramente motivacional (ej. elogios vacíos)."
     ],
-    aiAnalysis: "Análisis IA",
-    getInsights: "Obtener Insights",
-    loading: "Cargando...",
     levels: {
       "Iniciación": "Iniciación",
       "Intermedio": "Intermedio",
@@ -69,7 +66,7 @@ export const i18n: Record<string, Translations> = {
         oral_var: { label: "Promoción var.", definition: "Alentar a buscar soluciones de movimiento individualizadas (ej. '¡prueba otra cosa!')." }
       },
       feedback: {
-        prescriptive: { label: "Prescriptivo", definition: "Feedback centrado en patrones de movimiento recomendados biomecánicamente." },
+        prescriptive: { label: "Prescriptivo", definition: "Feedback centrado en patrones de movimiento recomendados biomecanicamente." },
         analogy: { label: "Vía analogía", definition: "Uso de analogía para describir más que una forma de movimiento prescrita." },
         movement_forms: { label: "Sobre formas mov.", definition: "Feedback centrado en partes del cuerpo utilizadas en la acción." },
         outcomes: { label: "Sobre resultados", definition: "Feedback centrado en el efecto de la acción realizada en el entorno." },
@@ -78,7 +75,7 @@ export const i18n: Record<string, Translations> = {
     }
   },
   en: {
-    title: "KTO Tracker Pro",
+    title: "KTO: Teaching and Coaching Observation Tool",
     coachSection: "Coach",
     sessionSection: "Session",
     activitySection: "New Activity",
@@ -113,9 +110,6 @@ export const i18n: Record<string, Translations> = {
       "Exclude pure organization instructions (e.g., 'get into pairs').",
       "Exclude purely motivational feedback (e.g., empty praises)."
     ],
-    aiAnalysis: "AI Analysis",
-    getInsights: "Get Insights",
-    loading: "Loading...",
     levels: {
       "Iniciación": "Initiation",
       "Intermedio": "Intermediate",
@@ -153,7 +147,7 @@ export const i18n: Record<string, Translations> = {
     }
   },
   zh: {
-    title: "KTO 教学追踪器",
+    title: "KTO: Teaching and Coaching Observation Tool",
     coachSection: "教练信息",
     sessionSection: "课程详情",
     activitySection: "新增活动",
@@ -188,9 +182,6 @@ export const i18n: Record<string, Translations> = {
       "排除纯组织指令（例如“分成两组”）。",
       "排除纯动机反馈（例如空洞的赞扬）。"
     ],
-    aiAnalysis: "AI 分析",
-    getInsights: "获取洞察",
-    loading: "加载中...",
     levels: {
       "Iniciación": "入门级",
       "Intermedio": "中级",
@@ -228,7 +219,7 @@ export const i18n: Record<string, Translations> = {
     }
   },
   pt: {
-    title: "KTO Tracker Pro",
+    title: "KTO: Teaching and Coaching Observation Tool",
     coachSection: "Treinador",
     sessionSection: "Sessão",
     activitySection: "Nova Atividade",
@@ -256,16 +247,13 @@ export const i18n: Record<string, Translations> = {
     actions: "Ações",
     methodology: "Instruções de Uso",
     helpInstructions: [
-      "Codifique as atividades durante a aula selecionando os três canais pedagógicos.",
-      "Clique em 'Atualizar' toda vez que os alunos forem praticar.",
-      "Cada observação representa um novo conteúdo (atividade pedagógica global).",
-      "Informações dadas antes da prática são capturadas como uma única atividade global.",
+      "Codifique as actividades durante a aula seleccionando os três canais pedagógicos.",
+      "Clique em 'Actualizar' cada vez que os alunos forem praticar.",
+      "Cada observação representa um novo conteúdo (actividade pedagógica global).",
+      "Informações dadas antes da prática são capturadas como uma única actividade global.",
       "Exclua instruções puras de organização (ex: 'fiquem em duplas').",
       "Exclua feedbacks puramente motivacionais (ex: elogios vazios)."
     ],
-    aiAnalysis: "Análise IA",
-    getInsights: "Obter Insights",
-    loading: "Carregando...",
     levels: {
       "Iniciación": "Iniciação",
       "Intermedio": "Intermediário",
@@ -275,11 +263,11 @@ export const i18n: Record<string, Translations> = {
     certifications: ["Play & Stay", "Nível 1", "Nível 2", "Nível 3"],
     options: {
       practice: {
-        isolated: { label: "Habilidades isoladas", definition: "Prática focada em uma técnica ou habilidade em um ambiente descontextualizado." },
+        isolated: { label: "Habilidades isoladas", definition: "Prática focada em uma técnica ou habilidade num ambiente descontextualizado." },
         representative: { label: "Hab. representativa", definition: "Situações de aprendizagem que imitam situações reais de jogo (ex: 1v1, 1v2)." },
         modified: { label: "Jogo modificado", definition: "Simulação de jogo com manipulação de restrições (regras, equipamentos)." },
-        small: { label: "Espaço reduzido", definition: "Jogo em espaço reduzido sem condições adicionais (ex: 5x5 futebol)." },
-        regular: { label: "Jogo regular", definition: "Atividade regular sem regras específicas (ex: 5x5 basquete)." },
+        small: { label: "Espaço reduzido", definition: "Jogo em espaço reduzido sem condiciones adicionais (ex: 5x5 futebol)." },
+        regular: { label: "Jogo regular", definition: "Actividade regular sem regras específicas (ex: 5x5 basquete)." },
         repetitive: { label: "Tarefa repetitiva", definition: "Repetição de um movimento continuamente sem alterações." },
         variability: { label: "Espaço variabilidade", definition: "Permite variabilidade no movimento, mas não é promovida pelo professor." },
         space_var: { label: "Var. espacial", definition: "Variação intencional do espaço dentro de uma tarefa ou entre sucessivas." },
@@ -289,15 +277,15 @@ export const i18n: Record<string, Translations> = {
       instruction: {
         prescriptive: { label: "Prescritiva", definition: "Instruções de padrões de movimento ideais baseados em pesquisa biomecânica." },
         analogy: { label: "Analogias", definition: "Uso de analogias para descrever formas de movimento (ex: 'lance como um arco-íris')." },
-        movement_forms: { label: "Formas mov.", definition: "Instrução específica focada em um padrão de movimento preferido." },
+        movement_forms: { label: "Formas mov.", definition: "Instrução específica focada num padrão de movimento preferido." },
         outcomes: { label: "Resultados", definition: "Instruções que exigem foco no resultado/efeito em vez da técnica." },
         oral_var: { label: "Promoção var.", definition: "Incentivar a busca por soluções de movimento individualizadas (ex: 'tente outra coisa!')." }
       },
       feedback: {
         prescriptive: { label: "Prescritivo", definition: "Feedback focado em padrões de movimento recomendados biomecanicamente." },
         analogy: { label: "Via analogia", definition: "Uso de analogia para descrever em vez de uma forma de movimento prescrita." },
-        movement_forms: { label: "Sobre formas mov.", definition: "Feedback focado em partes do corpo utilizadas na ação." },
-        outcomes: { label: "Sobre resultados", definition: "Feedback focado no efeito da ação realizada no ambiente." },
+        movement_forms: { label: "Sobre formas mov.", definition: "Feedback focado em partes do corpo utilizadas na acção." },
+        outcomes: { label: "Sobre resultados", definition: "Feedback focado no efeito da acção realizada no ambiente." },
         variability: { label: "Sobre variabilidade", definition: "Questionar os alunos sobre soluções individualizadas encontradas." }
       }
     }
