@@ -1,5 +1,5 @@
 
-export type Language = 'es' | 'en' | 'zh';
+export type Language = 'es' | 'en' | 'zh' | 'pt';
 
 export type Certification = 'Play & Stay' | 'Nivel 1' | 'Nivel 2' | 'Nivel 3';
 

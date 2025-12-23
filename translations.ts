@@ -226,5 +226,80 @@ export const i18n: Record<string, Translations> = {
         variability: { label: "关于变异", definition: "就学生发现的个性化解决方案向其提问。" }
       }
     }
+  },
+  pt: {
+    title: "KTO Tracker Pro",
+    coachSection: "Treinador",
+    sessionSection: "Sessão",
+    activitySection: "Nova Atividade",
+    name: "Nome",
+    age: "Idade",
+    certification: "Certificação",
+    date: "Data",
+    numPlayers: "Jogadores",
+    playerLevel: "Nível",
+    addActivity: "Registrar Atividade",
+    updateActivity: "Atualizar Atividade",
+    cancelEdit: "Cancelar",
+    removeActivity: "Excluir",
+    editActivity: "Editar",
+    saveSession: "Salvar Sessão",
+    loadSession: "Carregar",
+    exportCSV: "Exportar CSV",
+    history: "Histórico",
+    noHistory: "Vazio",
+    practiceOrg: "Org. Prática",
+    instruction: "Instrução",
+    feedback: "Feedback",
+    activityTitle: "Título da Atividade",
+    registeredActivities: "Registro de Atividades",
+    actions: "Ações",
+    methodology: "Instruções de Uso",
+    helpInstructions: [
+      "Codifique as atividades durante a aula selecionando os três canais pedagógicos.",
+      "Clique em 'Atualizar' toda vez que os alunos forem praticar.",
+      "Cada observação representa um novo conteúdo (atividade pedagógica global).",
+      "Informações dadas antes da prática são capturadas como uma única atividade global.",
+      "Exclua instruções puras de organização (ex: 'fiquem em duplas').",
+      "Exclua feedbacks puramente motivacionais (ex: elogios vazios)."
+    ],
+    aiAnalysis: "Análise IA",
+    getInsights: "Obter Insights",
+    loading: "Carregando...",
+    levels: {
+      "Iniciación": "Iniciação",
+      "Intermedio": "Intermediário",
+      "Competición": "Competição",
+      "Alta Competición": "Alta Competição"
+    },
+    certifications: ["Play & Stay", "Nível 1", "Nível 2", "Nível 3"],
+    options: {
+      practice: {
+        isolated: { label: "Habilidades isoladas", definition: "Prática focada em uma técnica ou habilidade em um ambiente descontextualizado." },
+        representative: { label: "Hab. representativa", definition: "Situações de aprendizagem que imitam situações reais de jogo (ex: 1v1, 1v2)." },
+        modified: { label: "Jogo modificado", definition: "Simulação de jogo com manipulação de restrições (regras, equipamentos)." },
+        small: { label: "Espaço reduzido", definition: "Jogo em espaço reduzido sem condições adicionais (ex: 5x5 futebol)." },
+        regular: { label: "Jogo regular", definition: "Atividade regular sem regras específicas (ex: 5x5 basquete)." },
+        repetitive: { label: "Tarefa repetitiva", definition: "Repetição de um movimento continuamente sem alterações." },
+        variability: { label: "Espaço variabilidade", definition: "Permite variabilidade no movimento, mas não é promovida pelo professor." },
+        space_var: { label: "Var. espacial", definition: "Variação intencional do espaço dentro de uma tarefa ou entre sucessivas." },
+        player_var: { label: "Var. jogadores", definition: "Variação intencional do número de oponentes." },
+        equip_var: { label: "Var. equipamento", definition: "Variação do equipamento utilizado (bolas/raquetes de tamanhos diferentes)." }
+      },
+      instruction: {
+        prescriptive: { label: "Prescritiva", definition: "Instruções de padrões de movimento ideais baseados em pesquisa biomecânica." },
+        analogy: { label: "Analogias", definition: "Uso de analogias para descrever formas de movimento (ex: 'lance como um arco-íris')." },
+        movement_forms: { label: "Formas mov.", definition: "Instrução específica focada em um padrão de movimento preferido." },
+        outcomes: { label: "Resultados", definition: "Instruções que exigem foco no resultado/efeito em vez da técnica." },
+        oral_var: { label: "Promoção var.", definition: "Incentivar a busca por soluções de movimento individualizadas (ex: 'tente outra coisa!')." }
+      },
+      feedback: {
+        prescriptive: { label: "Prescritivo", definition: "Feedback focado em padrões de movimento recomendados biomecanicamente." },
+        analogy: { label: "Via analogia", definition: "Uso de analogia para descrever em vez de uma forma de movimento prescrita." },
+        movement_forms: { label: "Sobre formas mov.", definition: "Feedback focado em partes do corpo utilizadas na ação." },
+        outcomes: { label: "Sobre resultados", definition: "Feedback focado no efeito da ação realizada no ambiente." },
+        variability: { label: "Sobre variabilidade", definition: "Questionar os alunos sobre soluções individualizadas encontradas." }
+      }
+    }
   }
 };

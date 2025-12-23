@@ -11,6 +11,7 @@ export const LanguageSelector: React.FC<Props> = ({ current, onSelect }) => {
   const langs: { code: Language; label: string }[] = [
     { code: 'es', label: 'Español' },
     { code: 'en', label: 'English' },
+    { code: 'pt', label: 'Português' },
     { code: 'zh', label: '中文' },
   ];
 

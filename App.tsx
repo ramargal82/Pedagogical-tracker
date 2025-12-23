@@ -29,8 +29,7 @@ import {
   CheckCircle2,
   FolderOpen,
   Info,
-  HelpCircle,
-  ChevronRight
+  HelpCircle
 } from 'lucide-react';
 
 const App: React.FC = () => {
@@ -169,19 +168,37 @@ const App: React.FC = () => {
 
   const exportToCSV = () => {
     if (activities.length === 0) return;
+    
     const practiceKeys = Object.keys(t.options.practice);
     const instructionKeys = Object.keys(t.options.instruction);
     const feedbackKeys = Object.keys(t.options.feedback);
+
     let csvContent = "data:text/csv;charset=utf-8,";
+    
+    // Headers: Coach Info + Session Info + Activity Title + Options
     const headers = [
-      t.activityTitle,
+      t.name,             // Coach Name
+      t.age,              // Coach Age
+      t.certification,    // Coach Certification
+      t.date,             // Session Date
+      t.numPlayers,       // Num Players
+      t.playerLevel,      // Level Label
+      t.activityTitle,    // Activity Title
       ...practiceKeys.map(k => `Org: ${t.options.practice[k].label}`),
       ...instructionKeys.map(k => `Inst: ${t.options.instruction[k].label}`),
       ...feedbackKeys.map(k => `Feed: ${t.options.feedback[k].label}`)
     ];
     csvContent += headers.map(h => `"${h}"`).join(",") + "\n";
+    
+    // Rows
     activities.forEach(a => {
       const row = [
+        `"${coach.name}"`,
+        `"${coach.age}"`,
+        `"${coach.certification}"`,
+        `"${session.date}"`,
+        `"${session.numPlayers}"`,
+        `"${t.levels[session.playerLevel]}"`,
         `"${a.title}"`,
         ...practiceKeys.map(k => a.practiceOrganization.includes(k) ? "1" : "0"),
         ...instructionKeys.map(k => a.instruction.includes(k) ? "1" : "0"),
@@ -189,10 +206,14 @@ const App: React.FC = () => {
       ].join(",");
       csvContent += row + "\n";
     });
+
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");
+    const safeCoachName = coach.name.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+    const fileName = `kto_data_${safeCoachName || 'session'}_${session.date}.csv`;
+    
     link.setAttribute("href", encodedUri);
-    link.setAttribute("download", `kto_session_${session.date}.csv`);
+    link.setAttribute("download", fileName);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -371,7 +392,7 @@ const App: React.FC = () => {
                       <div className="group relative">
                         <Info className="w-4 h-4 text-slate-300 hover:text-blue-500 cursor-help" />
                         <div className="absolute bottom-full right-0 mb-2 w-64 p-3 bg-slate-800 text-white text-[10px] rounded-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
-                          {t.methodology[0]}
+                          {t.methodology}
                         </div>
                       </div>
                     </div>
