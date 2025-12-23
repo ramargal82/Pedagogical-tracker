@@ -8,26 +8,27 @@ interface Props {
 }
 
 export const LanguageSelector: React.FC<Props> = ({ current, onSelect }) => {
-  const langs: { code: Language; label: string }[] = [
-    { code: 'es', label: 'Español' },
-    { code: 'en', label: 'English' },
-    { code: 'pt', label: 'Português' },
-    { code: 'zh', label: '中文' },
+  const langs: { code: Language; label: string; short: string }[] = [
+    { code: 'en', label: 'English', short: 'EN' },
+    { code: 'es', label: 'Español', short: 'ES' },
+    { code: 'pt', label: 'Português', short: 'PT' },
+    { code: 'zh', label: '中文', short: 'ZH' },
   ];
 
   return (
-    <div className="flex space-x-2">
+    <div className="flex space-x-1 bg-slate-100 p-1 rounded-xl">
       {langs.map((lang) => (
         <button
           key={lang.code}
           onClick={() => onSelect(lang.code)}
-          className={`px-3 py-1 text-sm font-medium rounded-full transition-colors ${
+          className={`px-2 md:px-3 py-1 text-[10px] md:text-xs font-bold rounded-lg transition-all ${
             current === lang.code
-              ? 'bg-blue-600 text-white'
-              : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50'
+              ? 'bg-white text-blue-600 shadow-sm'
+              : 'text-slate-500 hover:text-slate-700'
           }`}
         >
-          {lang.label}
+          <span className="hidden sm:inline">{lang.label}</span>
+          <span className="sm:hidden">{lang.short}</span>
         </button>
       ))}
     </div>
