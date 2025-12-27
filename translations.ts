@@ -9,10 +9,12 @@ export const i18n: Record<string, Translations> = {
     activitySection: "Nueva Actividad",
     name: "Nombre",
     age: "Edad",
-    certification: "Certificación",
+    country: "País",
+    yearsExperience: "Años de experiencia",
+    certification: "Nivel de certificación",
     date: "Fecha",
-    numPlayers: "Jugadores",
-    playerLevel: "Nivel",
+    numPlayers: "Número de jugadores",
+    playerLevel: "Nivel de los jugadores",
     addActivity: "Registrar Actividad",
     updateActivity: "Actualizar Actividad",
     cancelEdit: "Cancelar",
@@ -26,25 +28,32 @@ export const i18n: Record<string, Translations> = {
     practiceOrg: "Org. Práctica",
     instruction: "Instrucción",
     feedback: "Feedback",
-    activityTitle: "Título de Actividad",
+    activityTitle: "Actividad",
     registeredActivities: "Registro Actividades",
     actions: "Acciones",
     methodology: "Instrucciones de Uso",
     helpInstructions: [
       "Codifique las actividades durante la lección seleccionando los tres canales pedagógicos.",
-      "Haga clic en 'Actualizar' cada vez que los estudiantes vayan a practicar.",
+      "Haga clic en 'Registrar' cada vez que los estudiantes vayan a practicar.",
       "Cada observación representa un contenido nuevo (actividad pedagógica global).",
       "La información dada antes de que los alumnos practiquen se captura como una sola actividad global.",
       "Se excluyen instrucciones puras de organización (ej. 'poneos por parejas').",
       "Se excluye el feedback puramente motivacional (ej. elogios vacíos)."
     ],
     levels: {
-      "Iniciación": "Iniciación",
-      "Intermedio": "Intermedio",
-      "Competición": "Competición",
-      "Alta Competición": "Alta Competición"
+      "Beginner": "Principiante",
+      "Intermediate": "Intermedio",
+      "Advanced": "Avanzado",
+      "High performance": "Alto Rendimiento"
     },
-    certifications: ["Play & Stay", "Nivel 1", "Nivel 2", "Nivel 3"],
+    certifications: {
+      'None': "Ninguna",
+      'Play & Stay or equivalent': "Play & Stay o equivalente",
+      'Level 1 or equivalent': "Nivel 1 o equivalente",
+      'Level 2 or equivalent': "Nivel 2 o equivalente",
+      'Level 3 or equivalent': "Nivel 3 o equivalente",
+      'Others': "Otras"
+    },
     options: {
       practice: {
         isolated: { label: "Habilidades aisladas", definition: "Práctica centrada en una técnica o habilidad en un entorno descontextualizado (ej. repetición sin oponente)." },
@@ -54,16 +63,16 @@ export const i18n: Record<string, Translations> = {
         regular: { label: "Juego regular", definition: "Actividad regular sin reglas específicas (ej. 5v5 baloncesto, 11v11 fútbol)." },
         repetitive: { label: "Tarea repetitiva", definition: "Repetición de un movimiento continuamente sin cambios." },
         variability: { label: "Espacio variabilidad", definition: "Permite variabilidad en el movimiento pero no es promovida directamente por el profesor." },
-        space_var: { label: "Var. espacial", definition: "Variación intencionada del espacio dentro de una tarea o entre sucesivas." },
-        player_var: { label: "Var. jugadores", definition: "Variación intencionada del número de jugadores oponentes." },
-        equip_var: { label: "Var. equipamiento", definition: "Variación del equipamiento utilizado (pelotas, raquetas de distinto tamaño)." }
+        space_var: { label: "Variabilidad espacial", definition: "Variación intencionada del espacio dentro de una tarea o entre sucesivas." },
+        player_var: { label: "Variabilidad de jugadores", definition: "Variación intencionada del número de jugadores oponentes." },
+        equip_var: { label: "Variabilidad de equipamiento", definition: "Variación del equipamiento utilizado (pelotas, raquetas de distinto tamaño)." }
       },
       instruction: {
         prescriptive: { label: "Prescriptiva", definition: "Instrucciones de patrones de movimiento óptimos basados en investigación biomecánica." },
         analogy: { label: "Analogías", definition: "Uso de analogías para describir formas de movimiento (ej. 'lanza como un arcoíris')." },
         movement_forms: { label: "Formas mov.", definition: "Instrucción específica que se centra en un patrón de movimiento preferido." },
         outcomes: { label: "Resultados", definition: "Instrucciones que requieren centrarse en el resultado/efecto más que en la técnica." },
-        oral_var: { label: "Promoción var.", definition: "Alentar a buscar soluciones de movimiento individualizadas (ej. '¡prueba otra cosa!')." }
+        oral_var: { label: "Promoción variabilidad", definition: "Alentar a buscar soluciones de movimiento individualizadas (ej. '¡prueba otra cosa!')." }
       },
       feedback: {
         prescriptive: { label: "Prescriptivo", definition: "Feedback centrado en patrones de movimiento recomendados biomecanicamente." },
@@ -81,10 +90,12 @@ export const i18n: Record<string, Translations> = {
     activitySection: "New Activity",
     name: "Name",
     age: "Age",
-    certification: "Certification",
+    country: "Country",
+    yearsExperience: "Years of experience",
+    certification: "Certification level",
     date: "Date",
-    numPlayers: "Players",
-    playerLevel: "Level",
+    numPlayers: "Number of players",
+    playerLevel: "Player level",
     addActivity: "Register Activity",
     updateActivity: "Update Activity",
     cancelEdit: "Cancel",
@@ -98,25 +109,32 @@ export const i18n: Record<string, Translations> = {
     practiceOrg: "Practice Org.",
     instruction: "Instruction",
     feedback: "Feedback",
-    activityTitle: "Activity Title",
+    activityTitle: "Activity",
     registeredActivities: "Registered Activities",
     actions: "Actions",
     methodology: "Usage Instructions",
     helpInstructions: [
       "Code activities during the lesson by selecting the three pedagogical channels.",
-      "Click 'Update' every time students go and practice.",
+      "Click 'Register' every time students go and practice.",
       "Each observation represents new content (global pedagogical activity).",
       "Information provided before practice is captured as a single global activity.",
       "Exclude pure organization instructions (e.g., 'get into pairs').",
       "Exclude purely motivational feedback (e.g., empty praises)."
     ],
     levels: {
-      "Iniciación": "Initiation",
-      "Intermedio": "Intermediate",
-      "Competición": "Competition",
-      "Alta Competición": "High Performance"
+      "Beginner": "Beginner",
+      "Intermediate": "Intermediate",
+      "Advanced": "Advanced",
+      "High performance": "High performance"
     },
-    certifications: ["Play & Stay", "Level 1", "Level 2", "Level 3"],
+    certifications: {
+      'None': "None",
+      'Play & Stay or equivalent': "Play & Stay or equivalent",
+      'Level 1 or equivalent': "Level 1 or equivalent",
+      'Level 2 or equivalent': "Level 2 or equivalent",
+      'Level 3 or equivalent': "Level 3 or equivalent",
+      'Others': "Others"
+    },
     options: {
       practice: {
         isolated: { label: "Isolated Skills", definition: "Practice focusing on one technique in a de-contextualized environment." },
@@ -125,10 +143,10 @@ export const i18n: Record<string, Translations> = {
         small: { label: "Small Sided", definition: "Small sided game without additional conditions (e.g., 5v5 soccer)." },
         regular: { label: "Regular Play", definition: "Activity without specific rules/conditions (e.g., full court play)." },
         repetitive: { label: "Repetitive Task", definition: "Repeating a movement continuously without change." },
-        variability: { label: "Room for Var.", definition: "Allows variability in movement but not directly promoted by teacher." },
-        space_var: { label: "Space Var.", definition: "Intentional variation of space within or between tasks." },
-        player_var: { label: "Player Var.", definition: "Intentional variation of the number of opponents." },
-        equip_var: { label: "Equip. Var.", definition: "Variation of equipment used (different sized balls/racquets)." }
+        variability: { label: "Room for Variability", definition: "Allows variability in movement but not directly promoted by teacher." },
+        space_var: { label: "Space Variability", definition: "Intentional variation of space within or between tasks." },
+        player_var: { label: "Player Variability", definition: "Intentional variation of the number of opponents." },
+        equip_var: { label: "Equipment Variability", definition: "Variation of equipment used (different sized balls/racquets)." }
       },
       instruction: {
         prescriptive: { label: "Prescriptive", definition: "Optimal movement patterns based on biomechanical research." },
@@ -153,10 +171,12 @@ export const i18n: Record<string, Translations> = {
     activitySection: "新增活动",
     name: "姓名",
     age: "年龄",
-    certification: "认证",
+    country: "国家/地区",
+    yearsExperience: "执教年限",
+    certification: "认证级别",
     date: "日期",
-    numPlayers: "人数",
-    playerLevel: "水平",
+    numPlayers: "球员人数",
+    playerLevel: "球员水平",
     addActivity: "登记活动",
     updateActivity: "更新活动",
     cancelEdit: "取消",
@@ -170,25 +190,32 @@ export const i18n: Record<string, Translations> = {
     practiceOrg: "练习组织",
     instruction: "指令",
     feedback: "反馈",
-    activityTitle: "活动标题",
+    activityTitle: "活动",
     registeredActivities: "已登记活动",
     actions: "操作",
     methodology: "使用说明",
     helpInstructions: [
       "通过选择三个教学频道在课堂期间对教学活动进行编码。",
-      "每当学生去练习时，点击“更新”。",
+      "每当学生去练习时，点击“登记”。",
       "每次观察代表课程中的新内容（全局教学活动）。",
       "在教师派学生去练习之前提供的所有信息都被捕获为一个全局活动。",
       "排除纯组织指令（例如“分成两组”）。",
       "排除纯动机反馈（例如空洞的赞扬）。"
     ],
     levels: {
-      "Iniciación": "入门级",
-      "Intermedio": "中级",
-      "Competición": "竞技级",
-      "Alta Competición": "高水平竞技"
+      "Beginner": "初学者",
+      "Intermediate": "中级",
+      "Advanced": "高级",
+      "High performance": "高水平"
     },
-    certifications: ["Play & Stay", "1级", "2级", "3级"],
+    certifications: {
+      'None': "无",
+      'Play & Stay or equivalent': "Play & Stay 或同等水平",
+      'Level 1 or equivalent': "1级 或同等水平",
+      'Level 2 or equivalent': "2级 或同等水平",
+      'Level 3 or equivalent': "3级 或同等水平",
+      'Others': "其他"
+    },
     options: {
       practice: {
         isolated: { label: "孤立技能", definition: "在脱离背景的环境中专注于一项技术或技能的练习。" },
@@ -198,9 +225,9 @@ export const i18n: Record<string, Translations> = {
         regular: { label: "常规比赛", definition: "没有特定规则/条件的常规活动（如全场比赛）。" },
         repetitive: { label: "重复性任务", definition: "不间断地重复一个动作。" },
         variability: { label: "变异空间", definition: "允许动作变异，但教师不直接促进这种变异。" },
-        space_var: { label: "空间变异", definition: "在任务中或任务之间有目的地改变空间。" },
-        player_var: { label: "球员变异", definition: "有目的地改变对手人数。" },
-        equip_var: { label: "器材变异", definition: "所用器材的变化（不同尺寸的球/球拍）。" }
+        space_var: { label: "空间变异性", definition: "在任务中或任务之间有目的地改变空间。" },
+        player_var: { label: "球员变异性", definition: "有目的地改变对手人数。" },
+        equip_var: { label: "器材变异性", definition: "所用器材的变化（不同尺寸的球/球拍）。" }
       },
       instruction: {
         prescriptive: { label: "规范性指导", definition: "基于生物力学研究的最佳动作模式指导。" },
@@ -225,12 +252,14 @@ export const i18n: Record<string, Translations> = {
     activitySection: "Nova Atividade",
     name: "Nome",
     age: "Idade",
-    certification: "Certificação",
+    country: "País",
+    yearsExperience: "Anos de experiência",
+    certification: "Nível de certificação",
     date: "Data",
-    numPlayers: "Jogadores",
-    playerLevel: "Nível",
-    addActivity: "Registrar Atividade",
-    updateActivity: "Atualizar Atividade",
+    numPlayers: "Número de jogadores",
+    playerLevel: "Nível dos jogadores",
+    addActivity: "Registrar Actividade",
+    updateActivity: "Atualizar Actividade",
     cancelEdit: "Cancelar",
     removeActivity: "Excluir",
     editActivity: "Editar",
@@ -242,25 +271,32 @@ export const i18n: Record<string, Translations> = {
     practiceOrg: "Org. Prática",
     instruction: "Instrução",
     feedback: "Feedback",
-    activityTitle: "Título da Atividade",
-    registeredActivities: "Registro de Atividades",
+    activityTitle: "Actividade",
+    registeredActivities: "Registro de Actividades",
     actions: "Ações",
     methodology: "Instruções de Uso",
     helpInstructions: [
       "Codifique as actividades durante a aula seleccionando os três canais pedagógicos.",
-      "Clique em 'Actualizar' cada vez que os alunos forem praticar.",
+      "Clique em 'Registrar' cada vez que os alunos forem praticar.",
       "Cada observação representa um novo conteúdo (actividade pedagógica global).",
       "Informações dadas antes da prática são capturadas como uma única actividade global.",
       "Exclua instruções puras de organização (ex: 'fiquem em duplas').",
       "Exclua feedbacks puramente motivacionais (ex: elogios vazios)."
     ],
     levels: {
-      "Iniciación": "Iniciação",
-      "Intermedio": "Intermediário",
-      "Competición": "Competição",
-      "Alta Competición": "Alta Competição"
+      "Beginner": "Principiante",
+      "Intermediate": "Intermediário",
+      "Advanced": "Avançado",
+      "High performance": "Alto desempenho"
     },
-    certifications: ["Play & Stay", "Nível 1", "Nível 2", "Nível 3"],
+    certifications: {
+      'None': "Nenhuma",
+      'Play & Stay or equivalent': "Play & Stay ou equivalente",
+      'Level 1 or equivalent': "Nível 1 ou equivalente",
+      'Level 2 or equivalent': "Nível 2 ou equivalente",
+      'Level 3 or equivalent': "Nível 3 ou equivalente",
+      'Others': "Outras"
+    },
     options: {
       practice: {
         isolated: { label: "Habilidades isoladas", definition: "Prática focada em uma técnica ou habilidade num ambiente descontextualizado." },
@@ -270,16 +306,16 @@ export const i18n: Record<string, Translations> = {
         regular: { label: "Jogo regular", definition: "Actividade regular sem regras específicas (ex: 5x5 basquete)." },
         repetitive: { label: "Tarefa repetitiva", definition: "Repetição de um movimento continuamente sem alterações." },
         variability: { label: "Espaço variabilidade", definition: "Permite variabilidade no movimento, mas não é promovida pelo professor." },
-        space_var: { label: "Var. espacial", definition: "Variação intencional do espaço dentro de uma tarefa ou entre sucessivas." },
-        player_var: { label: "Var. jogadores", definition: "Variação intencional do número de oponentes." },
-        equip_var: { label: "Var. equipamento", definition: "Variação do equipamento utilizado (bolas/raquetes de tamanhos diferentes)." }
+        space_var: { label: "Variabilidade espacial", definition: "Variação intencional do espaço dentro de uma tarefa ou entre sucessivas." },
+        player_var: { label: "Variabilidade de jogadores", definition: "Variação intencional do número de oponentes." },
+        equip_var: { label: "Variabilidade de equipamento", definition: "Variação do equipamento utilizado (bolas/raquetes de tamanhos diferentes)." }
       },
       instruction: {
         prescriptive: { label: "Prescritiva", definition: "Instruções de padrões de movimento ideais baseados em pesquisa biomecânica." },
         analogy: { label: "Analogias", definition: "Uso de analogias para descrever formas de movimento (ex: 'lance como um arco-íris')." },
         movement_forms: { label: "Formas mov.", definition: "Instrução específica focada num padrão de movimento preferido." },
         outcomes: { label: "Resultados", definition: "Instruções que exigem foco no resultado/efeito em vez da técnica." },
-        oral_var: { label: "Promoção var.", definition: "Incentivar a busca por soluções de movimento individualizadas (ex: 'tente outra coisa!')." }
+        oral_var: { label: "Promoção variabilidade", definition: "Incentivar a busca por soluções de movimento individualizadas (ex: 'tente outra coisa!')." }
       },
       feedback: {
         prescriptive: { label: "Prescritivo", definition: "Feedback focado em padrões de movimento recomendados biomecanicamente." },

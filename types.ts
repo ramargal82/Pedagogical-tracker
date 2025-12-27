@@ -1,13 +1,21 @@
 
 export type Language = 'es' | 'en' | 'zh' | 'pt';
 
-export type Certification = 'Play & Stay' | 'Nivel 1' | 'Nivel 2' | 'Nivel 3';
+export type Certification = 
+  | 'None' 
+  | 'Play & Stay or equivalent' 
+  | 'Level 1 or equivalent' 
+  | 'Level 2 or equivalent' 
+  | 'Level 3 or equivalent' 
+  | 'Others';
 
-export type PlayerLevel = 'Iniciación' | 'Intermedio' | 'Competición' | 'Alta Competición';
+export type PlayerLevel = 'Beginner' | 'Intermediate' | 'Advanced' | 'High performance';
 
 export interface CoachInfo {
   name: string;
   age: number | '';
+  country: string;
+  yearsExperience: number | '';
   certification: Certification;
 }
 
@@ -45,6 +53,8 @@ export interface Translations {
   activitySection: string;
   name: string;
   age: string;
+  country: string;
+  yearsExperience: string;
   certification: string;
   date: string;
   numPlayers: string;
@@ -68,7 +78,7 @@ export interface Translations {
   helpInstructions: string[];
   methodology: string;
   levels: Record<PlayerLevel, string>;
-  certifications: string[];
+  certifications: Record<Certification, string>;
   options: {
     practice: Record<string, ManualDefinition>;
     instruction: Record<string, ManualDefinition>;
