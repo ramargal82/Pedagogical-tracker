@@ -7,7 +7,8 @@ import {
   ActivityData, 
   SessionRecord, 
   PlayerLevel, 
-  Certification 
+  Certification,
+  COUNTRIES
 } from './types';
 import { i18n } from './translations';
 import { LanguageSelector } from './components/LanguageSelector';
@@ -53,7 +54,7 @@ const App: React.FC = () => {
   // Registered Activities
   const [activities, setActivities] = useState<ActivityData[]>([]);
   
-  // Current Activity Form State (title is now managed automatically)
+  // Current Activity Form State
   const [currentActivity, setCurrentActivity] = useState<ActivityData>({
     id: '',
     title: '',
@@ -148,7 +149,6 @@ const App: React.FC = () => {
   const deleteActivity = (id: string) => {
     if (confirm(lang === 'es' ? '¿Borrar actividad?' : 'Delete activity?')) {
       const filtered = activities.filter(a => a.id !== id);
-      // Re-index titles to keep them sequential 1..N
       const activityLabel = lang === 'es' ? 'Actividad' : lang === 'pt' ? 'Actividade' : 'Activity';
       const reindexed = filtered.map((a, idx) => ({
         ...a,
@@ -170,23 +170,36 @@ const App: React.FC = () => {
   const exportToCSV = () => {
     if (activities.length === 0) return;
     
-    const practiceKeys = Object.keys(t.options.practice);
-    const instructionKeys = Object.keys(t.options.instruction);
-    const feedbackKeys = Object.keys(t.options.feedback);
+    // Always use English for export
+    const en = i18n.en;
+    const practiceKeys = Object.keys(en.options.practice);
+    const instructionKeys = Object.keys(en.options.instruction);
+    const feedbackKeys = Object.keys(en.options.feedback);
 
     let csvContent = "data:text/csv;charset=utf-8,";
     
     const headers = [
-      t.name, t.age, t.country, t.yearsExperience, t.certification, t.date, t.numPlayers, t.playerLevel, t.activityTitle,
-      ...practiceKeys.map(k => `Org: ${t.options.practice[k].label}`),
-      ...instructionKeys.map(k => `Inst: ${t.options.instruction[k].label}`),
-      ...feedbackKeys.map(k => `Feed: ${t.options.feedback[k].label}`)
+      en.name, en.age, en.country, en.yearsExperience, en.certification, en.date, en.numPlayers, en.playerLevel, en.activityTitle,
+      ...practiceKeys.map(k => `Org: ${en.options.practice[k].label}`),
+      ...instructionKeys.map(k => `Inst: ${en.options.instruction[k].label}`),
+      ...feedbackKeys.map(k => `Feed: ${en.options.feedback[k].label}`)
     ];
     csvContent += headers.map(h => `"${h}"`).join(",") + "\n";
     
-    activities.forEach(a => {
+    activities.forEach((a, idx) => {
+      // For Activity Title, we export "Activity N"
+      const activityTitleEn = `Activity ${idx + 1}`;
+      
       const row = [
-        `"${coach.name}"`, `"${coach.age}"`, `"${coach.country}"`, `"${coach.yearsExperience}"`, `"${t.certifications[coach.certification]}"`, `"${session.date}"`, `"${session.numPlayers}"`, `"${t.levels[session.playerLevel]}"`, `"${a.title}"`,
+        `"${coach.name}"`, 
+        `"${coach.age}"`, 
+        `"${coach.country}"`, 
+        `"${coach.yearsExperience}"`, 
+        `"${en.certifications[coach.certification]}"`, 
+        `"${session.date}"`, 
+        `"${session.numPlayers}"`, 
+        `"${en.levels[session.playerLevel]}"`, 
+        `"${activityTitleEn}"`,
         ...practiceKeys.map(k => a.practiceOrganization.includes(k) ? "1" : "0"),
         ...instructionKeys.map(k => a.instruction.includes(k) ? "1" : "0"),
         ...feedbackKeys.map(k => a.feedback.includes(k) ? "1" : "0")
@@ -318,11 +331,17 @@ const App: React.FC = () => {
                     />
                     <div className="relative">
                       <Globe className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300" />
-                      <input 
-                        type="text" placeholder={t.country} value={coach.country}
+                      <select 
+                        value={coach.country}
                         onChange={e => setCoach({...coach, country: e.target.value})}
-                        className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none text-sm"
-                      />
+                        className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none text-sm appearance-none"
+                      >
+                        <option value="">{t.country}</option>
+                        {COUNTRIES.map(c => <option key={c} value={c}>{c}</option>)}
+                      </select>
+                      <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none border-l pl-2 border-slate-200">
+                        <Plus className="w-3 h-3 text-slate-400 rotate-45" />
+                      </div>
                     </div>
                   </div>
                   <div className="grid grid-cols-2 gap-3 md:gap-4">
