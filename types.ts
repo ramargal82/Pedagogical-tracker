@@ -11,6 +11,8 @@ export type Certification =
 
 export type PlayerLevel = 'Beginner' | 'Intermediate' | 'Advanced' | 'High performance';
 
+export type SeasonPhase = 'Preparation' | 'Pre-competition' | 'Competition' | 'Recovery';
+
 export interface CoachInfo {
   name: string;
   age: number | '';
@@ -23,11 +25,13 @@ export interface SessionInfo {
   date: string;
   numPlayers: number | '';
   playerLevel: PlayerLevel;
+  seasonPhase: SeasonPhase;
 }
 
 export interface ActivityData {
   id: string;
   title: string;
+  duration: number | '';
   practiceOrganization: string[];
   instruction: string[];
   feedback: string[];
@@ -59,6 +63,8 @@ export interface Translations {
   date: string;
   numPlayers: string;
   playerLevel: string;
+  seasonPhase: string;
+  duration: string;
   addActivity: string;
   updateActivity: string;
   cancelEdit: string;
@@ -79,6 +85,7 @@ export interface Translations {
   methodology: string;
   levels: Record<PlayerLevel, string>;
   certifications: Record<Certification, string>;
+  seasonPhases: Record<SeasonPhase, string>;
   options: {
     practice: Record<string, ManualDefinition>;
     instruction: Record<string, ManualDefinition>;

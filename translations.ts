@@ -15,6 +15,8 @@ export const i18n: Record<string, Translations> = {
     date: "Fecha",
     numPlayers: "Número de jugadores",
     playerLevel: "Nivel de los jugadores",
+    seasonPhase: "Fase de la temporada",
+    duration: "Duración (min)",
     addActivity: "Registrar Actividad",
     updateActivity: "Actualizar Actividad",
     cancelEdit: "Cancelar",
@@ -53,6 +55,12 @@ export const i18n: Record<string, Translations> = {
       'Level 2 or equivalent': "Nivel 2 o equivalente",
       'Level 3 or equivalent': "Nivel 3 o equivalente",
       'Others': "Otras"
+    },
+    seasonPhases: {
+      'Preparation': 'Preparación',
+      'Pre-competition': 'Pre-competición',
+      'Competition': 'Competición',
+      'Recovery': 'Recuperación'
     },
     options: {
       practice: {
@@ -96,6 +104,8 @@ export const i18n: Record<string, Translations> = {
     date: "Date",
     numPlayers: "Number of players",
     playerLevel: "Player level",
+    seasonPhase: "Season phase",
+    duration: "Duration (min)",
     addActivity: "Register Activity",
     updateActivity: "Update Activity",
     cancelEdit: "Cancel",
@@ -134,6 +144,12 @@ export const i18n: Record<string, Translations> = {
       'Level 2 or equivalent': "Level 2 or equivalent",
       'Level 3 or equivalent': "Level 3 or equivalent",
       'Others': "Others"
+    },
+    seasonPhases: {
+      'Preparation': 'Preparation',
+      'Pre-competition': 'Pre-competition',
+      'Competition': 'Competition',
+      'Recovery': 'Recovery'
     },
     options: {
       practice: {
@@ -177,6 +193,8 @@ export const i18n: Record<string, Translations> = {
     date: "日期",
     numPlayers: "球员人数",
     playerLevel: "球员水平",
+    seasonPhase: "赛季阶段",
+    duration: "时长 (分钟)",
     addActivity: "登记活动",
     updateActivity: "更新活动",
     cancelEdit: "取消",
@@ -215,6 +233,12 @@ export const i18n: Record<string, Translations> = {
       'Level 2 or equivalent': "2级 或同等水平",
       'Level 3 or equivalent': "3级 或同等水平",
       'Others': "其他"
+    },
+    seasonPhases: {
+      'Preparation': '准备期',
+      'Pre-competition': '赛前期',
+      'Competition': '比赛期',
+      'Recovery': '恢复期'
     },
     options: {
       practice: {
@@ -258,6 +282,8 @@ export const i18n: Record<string, Translations> = {
     date: "Data",
     numPlayers: "Número de jogadores",
     playerLevel: "Nível dos jogadores",
+    seasonPhase: "Fase da temporada",
+    duration: "Duração (min)",
     addActivity: "Registrar Actividade",
     updateActivity: "Atualizar Actividade",
     cancelEdit: "Cancelar",
@@ -297,13 +323,19 @@ export const i18n: Record<string, Translations> = {
       'Level 3 or equivalent': "Nível 3 ou equivalente",
       'Others': "Outras"
     },
+    seasonPhases: {
+      'Preparation': 'Preparação',
+      'Pre-competition': 'Pré-competição',
+      'Competition': 'Competição',
+      'Recovery': 'Recuperação'
+    },
     options: {
       practice: {
         isolated: { label: "Habilidades isoladas", definition: "Prática focada em uma técnica ou habilidade num ambiente descontextualizado." },
         representative: { label: "Hab. representativa", definition: "Situações de aprendizagem que imitam situações reais de jogo (ex: 1v1, 1v2)." },
         modified: { label: "Jogo modificado", definition: "Simulação de jogo com manipulação de restrições (regras, equipamentos)." },
         small: { label: "Espaço reduzido", definition: "Jogo em espaço reduzido sem condiciones adicionais (ex: 5x5 futebol)." },
-        regular: { label: "Jogo regular", definition: "Actividade regular sem regras específicas (ex: 5x5 basquete)." },
+        regular: { label: "Jogo regular", definition: "Actividade regular sem reglas específicas (ex: 5x5 basquete)." },
         repetitive: { label: "Tarefa repetitiva", definition: "Repetição de um movimento continuamente sem alterações." },
         variability: { label: "Espaço variabilidade", definition: "Permite variabilidade no movimento, mas não é promovida pelo professor." },
         space_var: { label: "Variabilidade espacial", definition: "Variação intencional do espaço dentro de uma tarefa ou entre sucessivas." },

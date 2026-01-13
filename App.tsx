@@ -8,6 +8,7 @@ import {
   SessionRecord, 
   PlayerLevel, 
   Certification,
+  SeasonPhase,
   COUNTRIES
 } from './types';
 import { i18n } from './translations';
@@ -29,7 +30,9 @@ import {
   Info,
   HelpCircle,
   Globe,
-  Briefcase
+  Briefcase,
+  Clock,
+  Target
 } from 'lucide-react';
 
 const App: React.FC = () => {
@@ -48,7 +51,8 @@ const App: React.FC = () => {
   const [session, setSession] = useState<SessionInfo>({
     date: new Date().toISOString().split('T')[0],
     numPlayers: '',
-    playerLevel: 'Beginner'
+    playerLevel: 'Beginner',
+    seasonPhase: 'Preparation'
   });
 
   // Registered Activities
@@ -58,6 +62,7 @@ const App: React.FC = () => {
   const [currentActivity, setCurrentActivity] = useState<ActivityData>({
     id: '',
     title: '',
+    duration: '',
     practiceOrganization: [],
     instruction: [],
     feedback: []
@@ -122,6 +127,7 @@ const App: React.FC = () => {
     setCurrentActivity({
       id: '',
       title: '',
+      duration: '',
       practiceOrganization: [],
       instruction: [],
       feedback: []
@@ -140,6 +146,7 @@ const App: React.FC = () => {
     setCurrentActivity({
       id: '',
       title: '',
+      duration: '',
       practiceOrganization: [],
       instruction: [],
       feedback: []
@@ -179,7 +186,7 @@ const App: React.FC = () => {
     let csvContent = "data:text/csv;charset=utf-8,";
     
     const headers = [
-      en.name, en.age, en.country, en.yearsExperience, en.certification, en.date, en.numPlayers, en.playerLevel, en.activityTitle,
+      en.name, en.age, en.country, en.yearsExperience, en.certification, en.date, en.numPlayers, en.playerLevel, en.seasonPhase, en.activityTitle, en.duration,
       ...practiceKeys.map(k => `Org: ${en.options.practice[k].label}`),
       ...instructionKeys.map(k => `Inst: ${en.options.instruction[k].label}`),
       ...feedbackKeys.map(k => `Feed: ${en.options.feedback[k].label}`)
@@ -187,8 +194,8 @@ const App: React.FC = () => {
     csvContent += headers.map(h => `"${h}"`).join(",") + "\n";
     
     activities.forEach((a, idx) => {
-      // For Activity Title, we export "Activity N"
       const activityTitleEn = `Activity ${idx + 1}`;
+      const seasonPhaseEn = en.seasonPhases[session.seasonPhase];
       
       const row = [
         `"${coach.name}"`, 
@@ -198,8 +205,10 @@ const App: React.FC = () => {
         `"${en.certifications[coach.certification]}"`, 
         `"${session.date}"`, 
         `"${session.numPlayers}"`, 
-        `"${en.levels[session.playerLevel]}"`, 
+        `"${en.levels[session.playerLevel]}"`,
+        `"${seasonPhaseEn}"`,
         `"${activityTitleEn}"`,
+        `"${a.duration}"`,
         ...practiceKeys.map(k => a.practiceOrganization.includes(k) ? "1" : "0"),
         ...instructionKeys.map(k => a.instruction.includes(k) ? "1" : "0"),
         ...feedbackKeys.map(k => a.feedback.includes(k) ? "1" : "0")
@@ -339,9 +348,6 @@ const App: React.FC = () => {
                         <option value="">{t.country}</option>
                         {COUNTRIES.map(c => <option key={c} value={c}>{c}</option>)}
                       </select>
-                      <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none border-l pl-2 border-slate-200">
-                        <Plus className="w-3 h-3 text-slate-400 rotate-45" />
-                      </div>
                     </div>
                   </div>
                   <div className="grid grid-cols-2 gap-3 md:gap-4">
@@ -383,7 +389,7 @@ const App: React.FC = () => {
                     onChange={e => setSession({...session, date: e.target.value})}
                     className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none text-sm"
                   />
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
+                  <div className="grid grid-cols-2 gap-3 md:gap-4">
                     <div>
                       <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1">{t.numPlayers}</label>
                       <input 
@@ -403,6 +409,19 @@ const App: React.FC = () => {
                       </select>
                     </div>
                   </div>
+                  <div>
+                    <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1">{t.seasonPhase}</label>
+                    <div className="relative">
+                       <Target className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300" />
+                       <select 
+                        value={session.seasonPhase}
+                        onChange={e => setSession({...session, seasonPhase: e.target.value as SeasonPhase})}
+                        className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none text-sm appearance-none"
+                      >
+                        {(Object.keys(t.seasonPhases) as SeasonPhase[]).map(phase => <option key={phase} value={phase}>{t.seasonPhases[phase]}</option>)}
+                      </select>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -414,9 +433,21 @@ const App: React.FC = () => {
                   <h2 className="text-xl md:text-2xl font-black text-slate-800 uppercase tracking-tight">
                     {isEditing ? t.updateActivity : t.activitySection}
                   </h2>
-                  <span className="text-[10px] text-blue-600 font-bold tracking-widest mt-1">
-                    {isEditing ? currentActivity.title : `${lang === 'es' ? 'Actividad' : lang === 'pt' ? 'Actividade' : 'Activity'} ${activities.length + 1}`}
-                  </span>
+                  <div className="flex items-center space-x-4 mt-2">
+                    <span className="text-[10px] text-blue-600 font-bold tracking-widest">
+                      {isEditing ? currentActivity.title : `${lang === 'es' ? 'Actividad' : lang === 'pt' ? 'Actividade' : 'Activity'} ${activities.length + 1}`}
+                    </span>
+                    <div className="flex items-center bg-slate-100 rounded-full px-3 py-1 border border-slate-200">
+                      <Clock className="w-3 h-3 text-slate-400 mr-1.5" />
+                      <input 
+                        type="number" 
+                        placeholder={t.duration}
+                        value={currentActivity.duration}
+                        onChange={e => setCurrentActivity({...currentActivity, duration: e.target.value ? Number(e.target.value) : ''})}
+                        className="bg-transparent border-none outline-none text-[10px] font-bold text-slate-600 w-24 text-center"
+                      />
+                    </div>
+                  </div>
                 </div>
                 {isEditing && (
                   <button onClick={cancelEdit} className="text-red-500 font-bold flex items-center text-sm bg-red-50 px-3 py-1.5 rounded-xl">
@@ -519,6 +550,7 @@ const App: React.FC = () => {
                   <thead className="bg-slate-100/50 text-[10px] font-black uppercase tracking-widest text-slate-400 border-b border-slate-100">
                     <tr>
                       <th className="px-6 py-4">{t.activityTitle}</th>
+                      <th className="px-6 py-4">{t.duration}</th>
                       <th className="px-6 py-4">{t.practiceOrg}</th>
                       <th className="px-6 py-4">{t.instruction}</th>
                       <th className="px-6 py-4">{t.feedback}</th>
@@ -527,13 +559,14 @@ const App: React.FC = () => {
                   </thead>
                   <tbody className="divide-y divide-slate-100">
                     {activities.length === 0 ? (
-                      <tr><td colSpan={5} className="px-6 py-12 text-center text-slate-400 text-sm italic">
+                      <tr><td colSpan={6} className="px-6 py-12 text-center text-slate-400 text-sm italic">
                         {lang === 'es' ? 'Empieza registrando una actividad' : lang === 'pt' ? 'Comece registrando uma atividade' : 'Start by registering an activity'}
                       </td></tr>
                     ) : (
                       activities.map(act => (
                         <tr key={act.id} className="hover:bg-blue-50/20 transition-colors">
                           <td className="px-6 py-4 font-bold text-slate-700 min-w-[120px]">{act.title}</td>
+                          <td className="px-6 py-4 text-slate-500 font-mono text-sm">{act.duration ? `${act.duration}'` : '--'}</td>
                           <td className="px-6 py-4">
                             <div className="flex flex-wrap gap-1">
                               {act.practiceOrganization.map(k => <span key={k} className="text-[9px] px-1.5 py-0.5 bg-blue-50 text-blue-600 rounded font-bold uppercase">{t.options.practice[k].label}</span>)}
@@ -573,7 +606,12 @@ const App: React.FC = () => {
                     {activities.map(act => (
                       <div key={act.id} className="p-4 space-y-3 bg-white">
                         <div className="flex justify-between items-start">
-                          <h4 className="font-bold text-slate-800 text-sm bg-slate-100 px-2 py-0.5 rounded-lg">{act.title}</h4>
+                          <div className="flex flex-col">
+                            <h4 className="font-bold text-slate-800 text-sm bg-slate-100 px-2 py-0.5 rounded-lg w-fit">{act.title}</h4>
+                            <span className="text-[10px] text-slate-400 mt-1 ml-1 flex items-center">
+                              <Clock className="w-2.5 h-2.5 mr-1" /> {act.duration ? `${act.duration} min` : '--'}
+                            </span>
+                          </div>
                           <div className="flex space-x-1">
                              <button onClick={() => startEdit(act)} className="p-2 text-blue-600 bg-blue-50 rounded-lg"><Edit2 className="w-4 h-4" /></button>
                              <button onClick={() => deleteActivity(act.id)} className="p-2 text-red-500 bg-red-50 rounded-lg"><Trash2 className="w-4 h-4" /></button>
