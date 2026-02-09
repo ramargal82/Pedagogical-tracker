@@ -32,9 +32,14 @@ import {
   Globe,
   Briefcase,
   Clock,
-  Target
+  Target,
+  Users
 } from 'lucide-react';
 
+/**
+ * Main Application Component for KTO Tool.
+ * Provides functionality for tracking coaching sessions.
+ */
 const App: React.FC = () => {
   const [lang, setLang] = useState<Language>('en');
   const t = i18n[lang];
@@ -63,6 +68,7 @@ const App: React.FC = () => {
     id: '',
     title: '',
     duration: '',
+    numPlayers: '',
     practiceOrganization: [],
     instruction: [],
     feedback: []
@@ -86,7 +92,7 @@ const App: React.FC = () => {
 
   const saveToHistory = () => {
     if (activities.length === 0) {
-      alert(lang === 'es' ? 'No hay actividades para guardar' : lang === 'pt' ? 'Sem atividades para salvar' : 'No activities to save');
+      alert(lang === 'es' ? 'No hay actividades para guardar' : lang === 'pt' ? 'Sem actividades para salvar' : 'No activities to save');
       return;
     }
     const record: SessionRecord = {
@@ -128,6 +134,7 @@ const App: React.FC = () => {
       id: '',
       title: '',
       duration: '',
+      numPlayers: '',
       practiceOrganization: [],
       instruction: [],
       feedback: []
@@ -147,6 +154,7 @@ const App: React.FC = () => {
       id: '',
       title: '',
       duration: '',
+      numPlayers: '',
       practiceOrganization: [],
       instruction: [],
       feedback: []
@@ -186,7 +194,7 @@ const App: React.FC = () => {
     let csvContent = "data:text/csv;charset=utf-8,";
     
     const headers = [
-      en.name, en.age, en.country, en.yearsExperience, en.certification, en.date, en.numPlayers, en.playerLevel, en.seasonPhase, en.activityTitle, en.duration,
+      en.name, en.age, en.country, en.yearsExperience, en.certification, en.date, en.numPlayers + " (Session)", en.playerLevel, en.seasonPhase, en.activityTitle, en.duration, en.numPlayers + " (Activity)",
       ...practiceKeys.map(k => `Org: ${en.options.practice[k].label}`),
       ...instructionKeys.map(k => `Inst: ${en.options.instruction[k].label}`),
       ...feedbackKeys.map(k => `Feed: ${en.options.feedback[k].label}`)
@@ -209,6 +217,7 @@ const App: React.FC = () => {
         `"${seasonPhaseEn}"`,
         `"${activityTitleEn}"`,
         `"${a.duration}"`,
+        `"${a.numPlayers}"`,
         ...practiceKeys.map(k => a.practiceOrganization.includes(k) ? "1" : "0"),
         ...instructionKeys.map(k => a.instruction.includes(k) ? "1" : "0"),
         ...feedbackKeys.map(k => a.feedback.includes(k) ? "1" : "0")
@@ -265,7 +274,7 @@ const App: React.FC = () => {
               </h1>
             </div>
             <p className="text-[9px] md:text-xs text-slate-500 mt-1 md:ml-8 italic leading-tight opacity-80">
-              A practical tool by John Komar, Irfan Ismail & Jia Yi Chow, NIE, Singapore.
+              A practical tool by John Komar, Irfan Ismail & Jia Yi Chow, NIE, Singapore. Developed by GITTE, University of Valencia.
             </p>
           </div>
           <div className="flex items-center justify-between md:justify-end space-x-2 md:space-x-3">
@@ -433,20 +442,10 @@ const App: React.FC = () => {
                   <h2 className="text-xl md:text-2xl font-black text-slate-800 uppercase tracking-tight">
                     {isEditing ? t.updateActivity : t.activitySection}
                   </h2>
-                  <div className="flex items-center space-x-4 mt-2">
-                    <span className="text-[10px] text-blue-600 font-bold tracking-widest">
+                  <div className="flex items-center space-x-2 md:space-x-4 mt-3">
+                    <span className="text-[10px] text-blue-600 font-bold tracking-widest bg-blue-50 px-2 py-1 rounded">
                       {isEditing ? currentActivity.title : `${lang === 'es' ? 'Actividad' : lang === 'pt' ? 'Actividade' : 'Activity'} ${activities.length + 1}`}
                     </span>
-                    <div className="flex items-center bg-slate-100 rounded-full px-3 py-1 border border-slate-200">
-                      <Clock className="w-3 h-3 text-slate-400 mr-1.5" />
-                      <input 
-                        type="number" 
-                        placeholder={t.duration}
-                        value={currentActivity.duration}
-                        onChange={e => setCurrentActivity({...currentActivity, duration: e.target.value ? Number(e.target.value) : ''})}
-                        className="bg-transparent border-none outline-none text-[10px] font-bold text-slate-600 w-24 text-center"
-                      />
-                    </div>
                   </div>
                 </div>
                 {isEditing && (
@@ -454,6 +453,36 @@ const App: React.FC = () => {
                     <XCircle className="w-4 h-4 mr-1" /> {t.cancelEdit}
                   </button>
                 )}
+              </div>
+
+              {/* Emphasized Parameter Bar */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                 <div className="flex flex-col space-y-2 p-4 bg-slate-50 border-2 border-slate-100 rounded-2xl focus-within:border-blue-200 transition-all">
+                    <div className="flex items-center space-x-2 text-slate-500">
+                       <Clock className="w-4 h-4" />
+                       <span className="text-[10px] font-black uppercase tracking-wider">{t.duration}</span>
+                    </div>
+                    <input 
+                      type="number" 
+                      placeholder="0"
+                      value={currentActivity.duration}
+                      onChange={e => setCurrentActivity({...currentActivity, duration: e.target.value ? Number(e.target.value) : ''})}
+                      className="bg-transparent border-none outline-none text-xl md:text-2xl font-black text-slate-800 w-full"
+                    />
+                 </div>
+                 <div className="flex flex-col space-y-2 p-4 bg-slate-50 border-2 border-slate-100 rounded-2xl focus-within:border-blue-200 transition-all">
+                    <div className="flex items-center space-x-2 text-slate-500">
+                       <Users className="w-4 h-4" />
+                       <span className="text-[10px] font-black uppercase tracking-wider">{t.numPlayers}</span>
+                    </div>
+                    <input 
+                      type="number" 
+                      placeholder="0"
+                      value={currentActivity.numPlayers}
+                      onChange={e => setCurrentActivity({...currentActivity, numPlayers: e.target.value ? Number(e.target.value) : ''})}
+                      className="bg-transparent border-none outline-none text-xl md:text-2xl font-black text-slate-800 w-full"
+                    />
+                 </div>
               </div>
 
               <div className="space-y-6 md:space-y-10">
@@ -535,13 +564,15 @@ const App: React.FC = () => {
             <section className="bg-white rounded-2xl md:rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
               <div className="p-5 md:p-6 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
                 <h2 className="text-lg md:text-xl font-bold text-slate-800">{t.registeredActivities}</h2>
-                <button 
-                  onClick={exportToCSV} 
-                  disabled={activities.length === 0} 
-                  className="flex items-center px-3 md:px-4 py-2 bg-slate-800 text-white rounded-xl text-[10px] md:text-sm font-bold disabled:opacity-30 hover:bg-slate-700 transition-colors shadow-lg shadow-slate-200"
-                >
-                  <Download className="w-3 h-3 md:w-4 md:h-4 mr-2" /> {t.exportCSV}
-                </button>
+                <div className="flex items-center space-x-2">
+                  <button 
+                    onClick={exportToCSV} 
+                    disabled={activities.length === 0} 
+                    className="flex items-center px-3 md:px-4 py-2 bg-slate-800 text-white rounded-xl text-[10px] md:text-sm font-bold disabled:opacity-30 hover:bg-slate-700 transition-colors shadow-lg shadow-slate-200"
+                  >
+                    <Download className="w-3 h-3 md:w-4 md:h-4 mr-2" /> {t.exportCSV}
+                  </button>
+                </div>
               </div>
               
               {/* Desktop View (Table) */}
@@ -550,7 +581,7 @@ const App: React.FC = () => {
                   <thead className="bg-slate-100/50 text-[10px] font-black uppercase tracking-widest text-slate-400 border-b border-slate-100">
                     <tr>
                       <th className="px-6 py-4">{t.activityTitle}</th>
-                      <th className="px-6 py-4">{t.duration}</th>
+                      <th className="px-6 py-4 text-center">{t.duration} / {t.numPlayers}</th>
                       <th className="px-6 py-4">{t.practiceOrg}</th>
                       <th className="px-6 py-4">{t.instruction}</th>
                       <th className="px-6 py-4">{t.feedback}</th>
@@ -566,7 +597,13 @@ const App: React.FC = () => {
                       activities.map(act => (
                         <tr key={act.id} className="hover:bg-blue-50/20 transition-colors">
                           <td className="px-6 py-4 font-bold text-slate-700 min-w-[120px]">{act.title}</td>
-                          <td className="px-6 py-4 text-slate-500 font-mono text-sm">{act.duration ? `${act.duration}'` : '--'}</td>
+                          <td className="px-6 py-4 text-center">
+                            <div className="inline-flex items-center space-x-3 bg-slate-50 px-3 py-1 rounded-full border border-slate-100">
+                               <span className="flex items-center text-xs font-bold text-slate-600"><Clock className="w-3 h-3 mr-1 text-slate-400" /> {act.duration ? `${act.duration}'` : '--'}</span>
+                               <span className="text-slate-200">|</span>
+                               <span className="flex items-center text-xs font-bold text-slate-600"><Users className="w-3 h-3 mr-1 text-slate-400" /> {act.numPlayers || '--'}</span>
+                            </div>
+                          </td>
                           <td className="px-6 py-4">
                             <div className="flex flex-wrap gap-1">
                               {act.practiceOrganization.map(k => <span key={k} className="text-[9px] px-1.5 py-0.5 bg-blue-50 text-blue-600 rounded font-bold uppercase">{t.options.practice[k].label}</span>)}
@@ -608,9 +645,14 @@ const App: React.FC = () => {
                         <div className="flex justify-between items-start">
                           <div className="flex flex-col">
                             <h4 className="font-bold text-slate-800 text-sm bg-slate-100 px-2 py-0.5 rounded-lg w-fit">{act.title}</h4>
-                            <span className="text-[10px] text-slate-400 mt-1 ml-1 flex items-center">
-                              <Clock className="w-2.5 h-2.5 mr-1" /> {act.duration ? `${act.duration} min` : '--'}
-                            </span>
+                            <div className="flex items-center space-x-3 mt-1 ml-1">
+                                <span className="text-[10px] text-slate-500 font-bold flex items-center">
+                                  <Clock className="w-2.5 h-2.5 mr-1" /> {act.duration ? `${act.duration}m` : '--'}
+                                </span>
+                                <span className="text-[10px] text-slate-500 font-bold flex items-center">
+                                  <Users className="w-2.5 h-2.5 mr-1" /> {act.numPlayers || '--'}
+                                </span>
+                            </div>
                           </div>
                           <div className="flex space-x-1">
                              <button onClick={() => startEdit(act)} className="p-2 text-blue-600 bg-blue-50 rounded-lg"><Edit2 className="w-4 h-4" /></button>

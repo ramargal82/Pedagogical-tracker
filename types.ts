@@ -32,6 +32,7 @@ export interface ActivityData {
   id: string;
   title: string;
   duration: number | '';
+  numPlayers: number | '';
   practiceOrganization: string[];
   instruction: string[];
   feedback: string[];
