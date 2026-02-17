@@ -33,7 +33,8 @@ import {
   Briefcase,
   Clock,
   Target,
-  Users
+  Users,
+  Accessibility
 } from 'lucide-react';
 
 /**
@@ -57,7 +58,8 @@ const App: React.FC = () => {
     date: new Date().toISOString().split('T')[0],
     numPlayers: '',
     playerLevel: 'Beginner',
-    seasonPhase: 'Preparation'
+    seasonPhase: 'Preparation',
+    isWheelchair: false
   });
 
   // Registered Activities
@@ -194,7 +196,7 @@ const App: React.FC = () => {
     let csvContent = "data:text/csv;charset=utf-8,";
     
     const headers = [
-      en.name, en.age, en.country, en.yearsExperience, en.certification, en.date, en.numPlayers + " (Session)", en.playerLevel, en.seasonPhase, en.activityTitle, en.duration, en.numPlayers + " (Activity)",
+      en.name, en.age, en.country, en.yearsExperience, en.certification, en.date, en.numPlayers + " (Session)", en.playerLevel, en.seasonPhase, "Wheelchair Modality", en.activityTitle, en.duration, en.numPlayers + " (Activity)",
       ...practiceKeys.map(k => `Org: ${en.options.practice[k].label}`),
       ...instructionKeys.map(k => `Inst: ${en.options.instruction[k].label}`),
       ...feedbackKeys.map(k => `Feed: ${en.options.feedback[k].label}`)
@@ -215,6 +217,7 @@ const App: React.FC = () => {
         `"${session.numPlayers}"`, 
         `"${en.levels[session.playerLevel]}"`,
         `"${seasonPhaseEn}"`,
+        `"${session.isWheelchair ? 'Yes' : 'No'}"`,
         `"${activityTitleEn}"`,
         `"${a.duration}"`,
         `"${a.numPlayers}"`,
@@ -418,17 +421,33 @@ const App: React.FC = () => {
                       </select>
                     </div>
                   </div>
-                  <div>
-                    <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1">{t.seasonPhase}</label>
-                    <div className="relative">
-                       <Target className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300" />
-                       <select 
-                        value={session.seasonPhase}
-                        onChange={e => setSession({...session, seasonPhase: e.target.value as SeasonPhase})}
-                        className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none text-sm appearance-none"
-                      >
-                        {(Object.keys(t.seasonPhases) as SeasonPhase[]).map(phase => <option key={phase} value={phase}>{t.seasonPhases[phase]}</option>)}
-                      </select>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1">{t.seasonPhase}</label>
+                      <div className="relative">
+                         <Target className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300" />
+                         <select 
+                          value={session.seasonPhase}
+                          onChange={e => setSession({...session, seasonPhase: e.target.value as SeasonPhase})}
+                          className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none text-sm appearance-none"
+                        >
+                          {(Object.keys(t.seasonPhases) as SeasonPhase[]).map(phase => <option key={phase} value={phase}>{t.seasonPhases[phase]}</option>)}
+                        </select>
+                      </div>
+                    </div>
+                    <div className="flex flex-col">
+                       <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1">{t.wheelchair}</label>
+                       <button 
+                        onClick={() => setSession({...session, isWheelchair: !session.isWheelchair})}
+                        className={`flex items-center justify-between px-4 py-2.5 rounded-xl border-2 transition-all duration-200 ${
+                          session.isWheelchair 
+                          ? 'bg-blue-600 border-blue-600 text-white shadow-lg shadow-blue-100' 
+                          : 'bg-slate-50 border-slate-200 text-slate-500 hover:border-blue-200'
+                        }`}
+                       >
+                         <span className="text-sm font-bold uppercase tracking-tight">{t.wheelchair}</span>
+                         <Accessibility className={`w-5 h-5 ${session.isWheelchair ? 'text-white' : 'text-slate-300'}`} />
+                       </button>
                     </div>
                   </div>
                 </div>

@@ -26,6 +26,7 @@ export interface SessionInfo {
   numPlayers: number | '';
   playerLevel: PlayerLevel;
   seasonPhase: SeasonPhase;
+  isWheelchair: boolean;
 }
 
 export interface ActivityData {
@@ -65,6 +66,7 @@ export interface Translations {
   numPlayers: string;
   playerLevel: string;
   seasonPhase: string;
+  wheelchair: string;
   duration: string;
   addActivity: string;
   updateActivity: string;
