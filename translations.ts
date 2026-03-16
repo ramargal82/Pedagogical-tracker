@@ -36,11 +36,11 @@ export const i18n: Record<string, Translations> = {
     actions: "Acciones",
     methodology: "Instrucciones de Uso",
     helpInstructions: [
-      "Codifique las actividades durante la lección seleccionando los tres canales pedagógicos.",
-      "Haga clic en 'Registrar' cada vez que los estudiantes vayan a practicar.",
-      "Cada observación representa un contenido nuevo (actividad pedagógica global).",
-      "La información dada antes de que los alumnos practiquen se captura como una sola actividad global.",
-      "Se excluyen instrucciones puras de organización (ej. 'poneos por parejas').",
+      "Codifique las actividades durante la SESIÓN seleccionando los tres canales pedagógicos.",
+      "Haga clic en 'Registrar' cada vez que los jugadores realicen una actividad diferente.",
+      "Cada observación representa un contenido nuevo, especialmente cuando cambia la organización o las instrucciones (actividad pedagógica global).",
+      "La información dada antes de que los estudiantes practiquen se captura como una sola actividad global.",
+      "Se excluyen las instrucciones puramente organizativas (ej. 'en parejas').",
       "Se excluye el feedback puramente motivacional (ej. elogios vacíos)."
     ],
     levels: {
@@ -126,12 +126,12 @@ export const i18n: Record<string, Translations> = {
     actions: "Actions",
     methodology: "Usage Instructions",
     helpInstructions: [
-      "Code activities during the lesson by selecting the three pedagogical channels.",
-      "Click 'Register' every time students go and practice.",
-      "Each observation represents new content (global pedagogical activity).",
-      "Information provided before practice is captured as a single global activity.",
-      "Exclude pure organization instructions (e.g., 'get into pairs').",
-      "Exclude purely motivational feedback (e.g., empty praises)."
+      "Code the activities during the SESSION by selecting the three pedagogical channels.",
+      "Click 'Register' each time the players perform a different activity.",
+      "Each observation represents new content, especially when the organization or instructions change (global pedagogical activity).",
+      "The information given before students practice is captured as a single global activity.",
+      "Pure organizational instructions are excluded (e.g., 'in pairs').",
+      "Purely motivational feedback is excluded (e.g., empty praise)."
     ],
     levels: {
       "Beginner": "Beginner",
@@ -216,11 +216,11 @@ export const i18n: Record<string, Translations> = {
     actions: "操作",
     methodology: "使用说明",
     helpInstructions: [
-      "通过选择三个教学频道在课堂期间对教学活动进行编码。",
-      "每当学生去练习时，点击“登记”。",
-      "每次观察代表课程中的新内容（全局教学活动）。",
-      "在教师派学生去练习之前提供的所有信息都被捕获为一个全局活动。",
-      "排除纯组织指令（例如“分成两组”）。",
+      "通过选择三个教学频道在课程期间对活动进行编码。",
+      "每当球员进行不同的活动时，点击“登记”。",
+      "每次观察代表新内容，特别是当组织或指令发生变化时（全局教学活动）。",
+      "在学生练习之前提供的信息被捕获为一个单一的全局活动。",
+      "排除纯组织指令（例如“成对”）。",
       "排除纯动机反馈（例如空洞的赞扬）。"
     ],
     levels: {
@@ -306,12 +306,12 @@ export const i18n: Record<string, Translations> = {
     actions: "Ações",
     methodology: "Instruções de Uso",
     helpInstructions: [
-      "Codifique as actividades durante a aula seleccionando los tres canales pedagógicos.",
-      "Clique em 'Registrar' cada vez que os alunos forem praticar.",
-      "Cada observação representa um novo conteúdo (actividade pedagógica global).",
-      "Informações dadas antes da prática são capturadas como uma única actividade global.",
-      "Exclua instruções puras de organização (ex: 'fiquem em duplas').",
-      "Exclua feedbacks puramente motivacionais (ex: elogios vazios)."
+      "Codifique as atividades durante a SESSÃO selecionando os três canais pedagógicos.",
+      "Clique em 'Registrar' cada vez que os jogadores realizarem uma atividade diferente.",
+      "Cada observação representa um novo conteúdo, especialmente quando a organização ou as instruções mudam (atividade pedagógica global).",
+      "A informação dada antes de os alunos praticarem é capturada como uma única atividade global.",
+      "Instruções puramente organizacionais são excluídas (ex: 'em duplas').",
+      "Feedback puramente motivacional é excluído (ex: elogios vazios)."
     ],
     levels: {
       "Beginner": "Principiante",
