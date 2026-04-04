@@ -76,6 +76,7 @@ export interface Translations {
   saveSession: string;
   loadSession: string;
   exportCSV: string;
+  sendData: string;
   history: string;
   noHistory: string;
   practiceOrg: string;

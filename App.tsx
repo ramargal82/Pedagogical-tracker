@@ -34,7 +34,9 @@ import {
   Clock,
   Target,
   Users,
-  Accessibility
+  Accessibility,
+  Send,
+  Loader2
 } from 'lucide-react';
 
 /**
@@ -80,6 +82,8 @@ const App: React.FC = () => {
   const [history, setHistory] = useState<SessionRecord[]>([]);
   const [showHistory, setShowHistory] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
+  const [isSending, setIsSending] = useState(false);
+  const [sendResult, setSendResult] = useState<{ success: boolean; message: string } | null>(null);
 
   useEffect(() => {
     const saved = localStorage.getItem('pedagogical_history');
@@ -238,6 +242,85 @@ const App: React.FC = () => {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+  };
+
+  const sendToGoogleSheets = async () => {
+    if (activities.length === 0) return;
+    
+    console.log('Attempting to send data to Google Sheets...');
+    setIsSending(true);
+    setSendResult(null);
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 15000);
+
+    try {
+      const scriptUrl = 'https://script.google.com/macros/s/AKfycbw15AvTKwApEjmX6bCnTa3y5p3_up0VrfD7gu6w8znRIMOgLyn0vkzpgjT4clddhCs/exec';
+      
+      const en = i18n.en;
+      const practiceKeys = Object.keys(en.options.practice);
+      const instructionKeys = Object.keys(en.options.instruction);
+      const feedbackKeys = Object.keys(en.options.feedback);
+
+      const rows = activities.map((a, idx) => {
+        const activityTitleEn = `Activity ${idx + 1}`;
+        const seasonPhaseEn = en.seasonPhases[session.seasonPhase];
+        
+        const row: any = {
+          coachName: coach.name,
+          coachAge: coach.age,
+          coachCountry: coach.country,
+          coachExperience: coach.yearsExperience,
+          coachCertification: en.certifications[coach.certification],
+          sessionDate: session.date,
+          sessionNumPlayers: session.numPlayers,
+          sessionPlayerLevel: en.levels[session.playerLevel],
+          sessionSeasonPhase: seasonPhaseEn,
+          sessionIsWheelchair: session.isWheelchair ? 'Yes' : 'No',
+          activityTitle: activityTitleEn,
+          activityDuration: a.duration,
+          activityNumPlayers: a.numPlayers,
+        };
+
+        practiceKeys.forEach(k => {
+          row[`practice_${k}`] = a.practiceOrganization.includes(k) ? 1 : 0;
+        });
+        instructionKeys.forEach(k => {
+          row[`instruction_${k}`] = a.instruction.includes(k) ? 1 : 0;
+        });
+        feedbackKeys.forEach(k => {
+          row[`feedback_${k}`] = a.feedback.includes(k) ? 1 : 0;
+        });
+
+        return row;
+      });
+
+      await fetch(scriptUrl, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+          'Content-Type': 'text/plain',
+        },
+        body: JSON.stringify(rows),
+        signal: controller.signal
+      });
+
+      setSendResult({
+        success: true,
+        message: lang === 'es' ? '¡Datos enviados con éxito!' : 'Data sent successfully!'
+      });
+    } catch (error: any) {
+      console.error('Error sending data:', error);
+      let msg = lang === 'es' ? 'Error al enviar datos' : 'Error sending data';
+      if (error.name === 'AbortError') {
+        msg = lang === 'es' ? 'Tiempo de espera agotado' : 'Connection timed out';
+      }
+      setSendResult({ success: false, message: msg });
+    } finally {
+      clearTimeout(timeoutId);
+      setIsSending(false);
+      // Clear result message after 5 seconds
+      setTimeout(() => setSendResult(null), 5000);
+    }
   };
 
   return (
@@ -580,17 +663,38 @@ const App: React.FC = () => {
             </section>
 
             {/* Registry Display */}
-            <section className="bg-white rounded-2xl md:rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
+            <section className="bg-white rounded-2xl md:rounded-3xl shadow-sm border border-slate-200">
               <div className="p-5 md:p-6 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
                 <h2 className="text-lg md:text-xl font-bold text-slate-800">{t.registeredActivities}</h2>
                 <div className="flex items-center space-x-2">
                   <button 
                     onClick={exportToCSV} 
                     disabled={activities.length === 0} 
-                    className="flex items-center px-3 md:px-4 py-2 bg-slate-800 text-white rounded-xl text-[10px] md:text-sm font-bold disabled:opacity-30 hover:bg-slate-700 transition-colors shadow-lg shadow-slate-200"
+                    className="flex items-center px-3 md:px-4 py-2 bg-slate-100 text-slate-700 rounded-xl text-[10px] md:text-sm font-bold disabled:opacity-30 hover:bg-slate-200 transition-colors"
                   >
                     <Download className="w-3 h-3 md:w-4 md:h-4 mr-2" /> {t.exportCSV}
                   </button>
+                  <div className="relative">
+                    <button 
+                      onClick={sendToGoogleSheets} 
+                      disabled={activities.length === 0 || isSending} 
+                      className="flex items-center px-3 md:px-4 py-2 bg-blue-600 text-white rounded-xl text-[10px] md:text-sm font-bold disabled:opacity-30 hover:bg-blue-700 transition-colors shadow-lg shadow-blue-100"
+                    >
+                      {isSending ? (
+                        <Loader2 className="w-3 h-3 md:w-4 md:h-4 mr-2 animate-spin" />
+                      ) : (
+                        <Send className="w-3 h-3 md:w-4 md:h-4 mr-2" />
+                      )}
+                      {t.sendData}
+                    </button>
+                    {sendResult && (
+                      <div className={`absolute top-full mt-2 right-0 whitespace-nowrap px-4 py-2 rounded-xl text-xs font-bold shadow-xl z-[60] animate-in fade-in slide-in-from-top-2 duration-300 ${
+                        sendResult.success ? 'bg-green-600 text-white' : 'bg-red-600 text-white'
+                      }`}>
+                        {sendResult.message}
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
               
