@@ -4,7 +4,7 @@ export async function onRequestPost(context) {
     const datosEntrenamiento = await context.request.json();
 
     // ⚠️ CAMBIA ESTO: Pon aquí tu URL real de Google Apps Script o tu API de Google
-    const GOOGLE_SHEETS_URL = "https://script.google.com/macros/s/TU_ID_DE_SCRIPT/exec";
+    const GOOGLE_SHEETS_URL = "https://script.google.com/macros/s/AKfycbw15AvTKwApEjmX6bCnTa3y5p3_up0VrfD7gu6w8znRIMOgLyn0vkzpgjT4clddhCs/exec";
 
     // 2. Cloudflare (ejecutándose fuera de China) le envía los datos a Google
     const respuestaGoogle = await fetch(GOOGLE_SHEETS_URL, {
