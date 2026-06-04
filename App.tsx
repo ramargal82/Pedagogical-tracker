@@ -254,7 +254,7 @@ const App: React.FC = () => {
     const timeoutId = setTimeout(() => controller.abort(), 15000);
 
     try {
-      const scriptUrl = 'https://script.google.com/macros/s/AKfycbw15AvTKwApEjmX6bCnTa3y5p3_up0VrfD7gu6w8znRIMOgLyn0vkzpgjT4clddhCs/exec';
+      const scriptUrl = '/guardar';
       
       const en = i18n.en;
       const practiceKeys = Object.keys(en.options.practice);
