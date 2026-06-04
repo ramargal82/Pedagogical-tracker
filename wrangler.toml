@@ -1,0 +1,8 @@
+name = "pedagogical-tracker"
+main = "worker.ts"
+compatibility_date = "2026-06-04"
+compatibility_flags = ["nodejs_compat"]
+
+[assets]
+directory = "./dist"
+binding = "ASSETS"
