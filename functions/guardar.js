@@ -1,30 +1,49 @@
 export async function onRequestPost(context) {
-  try {
-    // 1. Recibe los datos del entrenamiento enviados desde el móvil en China
-    const datosEntrenamiento = await context.request.json();
+  // 1. Configuración de cabeceras CORS de seguridad
+  const corsHeaders = {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "POST, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type",
+  };
 
-    // ⚠️ CAMBIA ESTO: Pon aquí tu URL real de Google Apps Script o tu API de Google
+  try {
+    // 2. Lee los datos que envían los entrenadores como texto plano/JSON
+    const cuerpoTexto = await context.request.text();
+
+    // ⚠️ CAMBIA ESTO: Pon aquí tu URL real de Google Apps Script (la que termina en /exec)
     const GOOGLE_SHEETS_URL = "https://script.google.com/macros/s/AKfycbw15AvTKwApEjmX6bCnTa3y5p3_up0VrfD7gu6w8znRIMOgLyn0vkzpgjT4clddhCs/exec";
 
-    // 2. Cloudflare (ejecutándose fuera de China) le envía los datos a Google
+    // 3. Cloudflare (fuera de China) le inyecta los datos a Google Sheets
     const respuestaGoogle = await fetch(GOOGLE_SHEETS_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(datosEntrenamiento),
+      body: cuerpoTexto,
     });
 
-    // 3. Devuelve respuesta de éxito al navegador del entrenador
+    // 4. Devuelve respuesta de éxito al navegador del entrenador
     return new Response(JSON.stringify({ status: "success" }), {
       status: 200,
-      headers: { "Content-Type": "application/json" },
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
 
   } catch (error) {
     return new Response(JSON.stringify({ status: "error", message: error.message }), {
       status: 500,
-      headers: { "Content-Type": "application/json" },
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   }
+}
+
+// Manejar la petición OPTIONS preflight automática que hacen los navegadores
+export async function onRequestOptions() {
+  return new Response(null, {
+    status: 204,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "POST, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type",
+    },
+  });
 }
