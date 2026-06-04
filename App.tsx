@@ -254,7 +254,7 @@ const App: React.FC = () => {
     const timeoutId = setTimeout(() => controller.abort(), 15000);
 
     try {
-      const scriptUrl = 'guardar/';
+      const scriptUrl = 'https://script.google.com/macros/s/AKfycbw15AvTKwApEjmX6bCnTa3y5p3_up0VrfD7gu6w8znRIMOgLyn0vkzpgjT4clddhCs/exec';
       
       const en = i18n.en;
       const practiceKeys = Object.keys(en.options.practice);
@@ -295,16 +295,14 @@ const App: React.FC = () => {
       });
 
       await fetch(scriptUrl, {
-  method: 'POST',
-  // 1. Cambiamos 'no-cors' a 'cors' porque tu Cloudflare Worker ya está preparado para gestionarlo de forma segura
-  mode: 'cors', 
-  headers: {
-    // 2. Cambiamos a 'application/json' porque le estás enviando un JSON estructurado
-    'Content-Type': 'application/json', 
-  },
-  body: JSON.stringify(rows),
-  signal: controller.signal
-});
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+          'Content-Type': 'text/plain',
+        },
+        body: JSON.stringify(rows),
+        signal: controller.signal
+      });
 
       setSendResult({
         success: true,
