@@ -254,7 +254,7 @@ const App: React.FC = () => {
     const timeoutId = setTimeout(() => controller.abort(), 15000);
 
     try {
-      const scriptUrl = 'https://pedagogical-tracker.ramarga82.workers.dev/';
+      const scriptUrl = 'guardar/';
       
       const en = i18n.en;
       const practiceKeys = Object.keys(en.options.practice);
