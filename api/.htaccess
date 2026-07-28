@@ -1,0 +1,18 @@
+# Bloquear el acceso directo a los archivos que no son endpoints.
+#
+# Nota: LiteSpeed no aplica "Require all denied" dentro de <FilesMatch> en
+# .htaccess de usuario (probado: devolvia 200 con cuerpo vacio). La regla de
+# rewrite con [F] si la respeta y devuelve un 403 limpio.
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^(secrets|_lib)\.php$ - [F,L]
+</IfModule>
+
+# Cinturon y tirantes, por si mod_rewrite no estuviera disponible.
+<FilesMatch "^(secrets|_lib)\.php$">
+    Require all denied
+</FilesMatch>
+
+# Nunca listar el contenido de la carpeta.
+Options -Indexes
