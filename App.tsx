@@ -270,7 +270,7 @@ const App: React.FC = () => {
     setIsSending(true);
     setSendResult(null);
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 15000);
+    const timeoutId = setTimeout(() => controller.abort(), 30000);
 
 
     try {
@@ -318,15 +318,25 @@ const App: React.FC = () => {
       });
 
 
-      await fetch(scriptUrl, {
+      // Mismo origen (/api/sheets en este dominio): NO usar mode:'no-cors'.
+      // Con no-cors la respuesta es opaca y la app daria "exito" siempre,
+      // incluso si el servidor fallara. Ahora se comprueba de verdad.
+      const response = await fetch(scriptUrl, {
         method: 'POST',
-        mode: 'no-cors',
         headers: {
-          'Content-Type': 'text/plain',
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(rows),
         signal: controller.signal
       });
+
+      if (!response.ok) {
+        const detail = await response
+          .json()
+          .then((d: any) => d?.error as string | undefined)
+          .catch(() => undefined);
+        throw new Error(detail ?? `HTTP ${response.status}`);
+      }
 
 
       setSendResult({

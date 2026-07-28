@@ -1,0 +1,14 @@
+/* Fuente Inter autoalojada vía el paquete npm @fontsource-variable/inter.
+   Los .woff2 acaban dentro de dist/ y se sirven desde el propio dominio.
+   Sustituye al servicio de fuentes de Google, bloqueado en China. */
+@import '@fontsource-variable/inter';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: 'Inter Variable', 'Inter', system-ui, -apple-system, 'Segoe UI',
+    'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  background-color: #f8fafc;
+}
